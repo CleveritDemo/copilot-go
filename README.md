@@ -66,7 +66,7 @@ go run ./cmd
 
 ### Step 3: Read CSV file
 
-Ask to copilot how to read a csv file
+Ask to copilot how to create a function to read CSV file
 
 ```
 @workspace How to create a function to only read this csv #file:accounts.csv
@@ -612,4 +612,4 @@ go test ./cmd
 
 Exporting GitHub Copilot chat enables you to document and review interactions for future reference, share insights with team members, and track decision-making processes, enhancing collaboration, learning, and code quality.
 
-To export the copilot chat, press Ctrl + Shift P and type 'Export Chat'
+To export the copilot chat, press `Ctrl + Shift + P` and type 'Export Chat'
