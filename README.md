@@ -1,8 +1,8 @@
-### Activity
+### 💻 Activity
 
 Golang Development with GitHub Copilot
 
-### General Objective:
+### 🎯 General Objective:
 
 Demonstrate how GitHub Copilot enhances Go development by assisting in project creation, CSV file handling, function implementation, and testing, while providing a practical understanding of how AI-assisted coding can streamline and improve programming workflows.
 
@@ -42,7 +42,7 @@ Demonstrate how GitHub Copilot enhances Go development by assisting in project c
 
 To start the activity we are going to ask to copilot chat to create a new Go project
 
-Prompt:
+👤 Prompt:
 
 ```
 @workspace /new Create a basic go project called copilot-go-handson, print a hello world message. Use go version 1.23.0
@@ -54,13 +54,15 @@ Prompt:
 
 Ask to copilot how to run our project
 
-Prompt:
+👤 Prompt:
 
 ```
 @workspace how to run my go project
 ```
 
-```
+🤖 Copilot Answer:
+
+```cmd
 go run ./cmd
 ```
 
@@ -68,11 +70,15 @@ go run ./cmd
 
 Ask to copilot how to create a function to read CSV file
 
+👤 Prompt:
+
 ```
 @workspace How to create a function to only read this csv #file:accounts.csv
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 package main
 
 import (
@@ -114,11 +120,15 @@ func main() {
 
 Tell copilot, the types of the columns
 
+👤 Prompt:
+
 ```
 @workspace The csv has the following colums : Account ID: string AccountHolderName: string Balance: number Currency: string Type string createdAt: date
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 package main
 import (
 	"encoding/csv"
@@ -190,11 +200,15 @@ func main() {
 
 Ask to copilot to create an enum for account type
 
+👤 Prompt:
+
 ```
 How to create an enum for account type, account type could be 'Checking' or 'Saving'
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 type AccountType string
 
 const (
@@ -203,7 +217,7 @@ const (
 )
 ```
 
-```
+```go
 package main
 
 import (
@@ -284,11 +298,15 @@ func main() {
 
 Tell copilot to create an enum for currency, currency could be EUR or USD
 
+👤Prompt:
+
 ```
 Now, create an enum for currency, currency could be USD or EUR
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 type Currency string
 
 const (
@@ -298,7 +316,7 @@ const (
 )
 ```
 
-```
+```go
 package main
 
 import (
@@ -387,13 +405,15 @@ func main() {
 
 We want to sum the balances in the CSV file by year and by currency, to tell copilot to do it.
 
-Prompt:
+👤Prompt:
 
 ```
 Now, I want to get the sum of balances by year and by Currency
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 func sumBalancesByYearAndCurrency(accounts []Account) map[string]map[Currency]float64 {
 	sums := make(map[string]map[Currency]float64)
 
@@ -413,13 +433,15 @@ func sumBalancesByYearAndCurrency(accounts []Account) map[string]map[Currency]fl
 
 We want to export the result of the sum of balances by year and currency, tell copilot to explain how to do it
 
-Prompt:
+👤Prompt:
 
 ```
 now I want to export in a new csv the result of the sum of balances by year and currency, the csv must be exported in the assets directory
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 func writeCSV(filePath string, sums map[string]map[Currency]float64) error {
 	file, err := os.Create(filePath)
 	if err != nil {
@@ -449,13 +471,15 @@ func writeCSV(filePath string, sums map[string]map[Currency]float64) error {
 
 Ask to copilot to generate test for the function to sum balances. Select the function and use the selection in the copilot chat.
 
-Prompt:
+👤Prompt:
 
 ```
 @workspace now how to add unit tests for #selection
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 func TestSumBalancesByYearAndCurrency(t *testing.T) {
 	// Create sample data
 	accounts := []Account{
@@ -480,13 +504,15 @@ func TestSumBalancesByYearAndCurrency(t *testing.T) {
 
 Now we want to test all the main file. Tell copilot to do it.
 
-Prompt:
+👤Prompt:
 
 ```
 @workspace /tests generate tests for #file:main.go
 ```
 
-```
+🤖 Copilot Answer:
+
+```go
 package main
 
 import (
@@ -594,21 +620,24 @@ func TestWriteCSV(t *testing.T) {
 }
 
 
+
 ```
 
-In case of copilot didn't suggest how to run the test file, ask to Copilot how to do it.
+> ❗ In case of copilot didn't suggest how to run the test file, ask to Copilot how to do it.
 
-Prompt:
+👤Prompt:
 
 ```
 @workspace how to run tests
 ```
 
-```
+🤖 Copilot Answer:
+
+```cmd
 go test ./cmd
 ```
 
-### Step 10 : Export Copilot Chat
+### Step 10: Export Copilot Chat
 
 Exporting GitHub Copilot chat enables you to document and review interactions for future reference, share insights with team members, and track decision-making processes, enhancing collaboration, learning, and code quality.
 
