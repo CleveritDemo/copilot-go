@@ -712,7 +712,7 @@ func main() {
 go run main.go
 ```
 
-### Step 110: Export Copilot Chat
+### Step 10: Export Copilot Chat
 
 Exporting GitHub Copilot chat enables you to document and review interactions for future reference, share insights with team members, and track decision-making processes, enhancing collaboration, learning, and code quality.
 
