@@ -38,21 +38,21 @@ Demonstrate how GitHub Copilot enhances Go development by assisting in project c
 
 - **Insightful Documentation**: You will know how to export and analyze GitHub Copilot chat logs, gaining insights into the AI’s suggestions and improving your understanding of how Copilot supports your coding process.
 
-### Step 1: Clone the repository
+### Before starting the activity: Clone the repository.
 
-### Step 2: Create a GO project with GitHub Copilot
+### Step 1: Create a GO project with GitHub Copilot
 
 To start the activity we are going to ask to copilot chat to create a new Go project
 
 👤 Prompt:
 
 ```
-@workspace /new Create a basic go project called copilot-go-handson, print a hello world message. Use go version 1.23.0
+@workspace /new Create a basic go project called copilot-go-handson, print a hello world message. Use go version 1.23.0 and the cmd folder.
 ```
 
 ![alt text](./assets/image-1.png)
 
-### Step 3: Run go project
+Select the folder where you cloned the repository and then navigate to the folder `copilot-go-handson`
 
 Ask to copilot how to run our project
 
@@ -68,7 +68,7 @@ Ask to copilot how to run our project
 go run ./cmd
 ```
 
-### Step 4: Read CSV file
+### Step 2: Read CSV file
 
 Ask to copilot how to create a function to read CSV file
 
@@ -118,7 +118,15 @@ func main() {
 }
 ```
 
-### Step 5: Specify columns types
+⚠️ In the line code with:
+
+```go
+ records, err := readCSV("assets/accounts.csv")
+```
+
+Please make sure to specify the correct path to accounts.csv file
+
+### Step 3: Specify columns types
 
 Tell copilot, the types of the columns
 
@@ -198,7 +206,7 @@ func main() {
 }
 ```
 
-### Step 6: Create enums for currency and account type
+### Step 4: Create enums for account type
 
 > ℹ️ In Go there are no enums as such, in the style of other languages such as Java or C#. However, Go offers a way to achieve similar behavior by using constant types (consts) and the concept of user-defined types
 
@@ -299,7 +307,7 @@ func main() {
 }
 ```
 
-### Step 7: Create an enum for currency
+### Step 5: Create an enum for currency
 
 Tell copilot to create an enum for currency, currency could be EUR or USD
 
@@ -406,7 +414,7 @@ func main() {
 }
 ```
 
-### Step 8: Create a function to sum balances by year and currency
+### Step 6: Create a function to sum balances by year and currency
 
 > ⚠️ GitHub Copilot will most likely give us somewhat different answers to the code we have in our README, but the result should be similar.
 
@@ -436,7 +444,7 @@ func sumBalancesByYearAndCurrency(accounts []Account) map[string]map[Currency]fl
 }
 ```
 
-### Step 9: Export a csv with the result of the sum balances by year and currency
+### Step 7: Export a csv with the result of the sum balances by year and currency
 
 We want to export the result of the sum of balances by year and currency, tell copilot to explain how to do it
 
@@ -474,7 +482,7 @@ func writeCSV(filePath string, sums map[string]map[Currency]float64) error {
 }
 ```
 
-### Step 10: Add Tests
+### Step 8: Add Tests
 
 > ⚠️ GitHub Copilot will most likely give us somewhat different answers to the code we have in our README, but the result should be similar.
 
@@ -646,7 +654,7 @@ func TestWriteCSV(t *testing.T) {
 go test ./cmd
 ```
 
-### Step 11: Add Cron Job to export csv
+### Step 9: Add Cron Job to export csv
 
 Tell to GitHub Copilot that you want to implement cron jobs to export the csv
 
@@ -704,7 +712,7 @@ func main() {
 go run main.go
 ```
 
-### Step 12: Export Copilot Chat
+### Step 10: Export Copilot Chat
 
 Exporting GitHub Copilot chat enables you to document and review interactions for future reference, share insights with team members, and track decision-making processes, enhancing collaboration, learning, and code quality.
 
