@@ -38,7 +38,9 @@ Demonstrate how GitHub Copilot enhances Go development by assisting in project c
 
 - **Insightful Documentation**: You will know how to export and analyze GitHub Copilot chat logs, gaining insights into the AI’s suggestions and improving your understanding of how Copilot supports your coding process.
 
-### Step 1: Create a GO project with GitHub Copilot
+### Step 1: Clone the repository
+
+### Step 2: Create a GO project with GitHub Copilot
 
 To start the activity we are going to ask to copilot chat to create a new Go project
 
@@ -50,7 +52,7 @@ To start the activity we are going to ask to copilot chat to create a new Go pro
 
 ![alt text](./assets/image-1.png)
 
-### Step 2: Run go project
+### Step 3: Run go project
 
 Ask to copilot how to run our project
 
@@ -66,7 +68,7 @@ Ask to copilot how to run our project
 go run ./cmd
 ```
 
-### Step 3: Read CSV file
+### Step 4: Read CSV file
 
 Ask to copilot how to create a function to read CSV file
 
@@ -116,7 +118,7 @@ func main() {
 }
 ```
 
-### Step 4: Specify columns types
+### Step 5: Specify columns types
 
 Tell copilot, the types of the columns
 
@@ -196,14 +198,16 @@ func main() {
 }
 ```
 
-### Step 5: Create enums for Currency and Account Type
+### Step 6: Create enums for currency and account type
+
+> ℹ️ In Go there are no enums as such, in the style of other languages such as Java or C#. However, Go offers a way to achieve similar behavior by using constant types (consts) and the concept of user-defined types
 
 Ask to copilot to create an enum for account type
 
 👤 Prompt:
 
 ```
-How to create an enum for account type, account type could be 'Checking' or 'Saving'
+@workspace Define an AccountType enum as a string with two possible values: Checking and Savings
 ```
 
 🤖 Copilot Answer:
@@ -232,8 +236,9 @@ type AccountType string
 
 const (
     Checking AccountType = "Checking"
-    Saving   AccountType = "Saving"
+    Savings  AccountType = "Savings"
 )
+
 
 type Account struct {
     AccountID         string
@@ -294,14 +299,14 @@ func main() {
 }
 ```
 
-### Step 6: Create an enum for Currency
+### Step 7: Create an enum for currency
 
 Tell copilot to create an enum for currency, currency could be EUR or USD
 
 👤Prompt:
 
 ```
-Now, create an enum for currency, currency could be USD or EUR
+@workspace Define an Currency enum as a string with two possible values: USD and EUR
 ```
 
 🤖 Copilot Answer:
@@ -401,14 +406,16 @@ func main() {
 }
 ```
 
-### Step 7: Create a function to sum balances by year and currency
+### Step 8: Create a function to sum balances by year and currency
+
+> ⚠️ GitHub Copilot will most likely give us somewhat different answers to the code we have in our README, but the result should be similar.
 
 We want to sum the balances in the CSV file by year and by currency, to tell copilot to do it.
 
 👤Prompt:
 
 ```
-Now, I want to get the sum of balances by year and by Currency
+@workspace now create a function to get the sum of balances by year and by Currency
 ```
 
 🤖 Copilot Answer:
@@ -429,7 +436,7 @@ func sumBalancesByYearAndCurrency(accounts []Account) map[string]map[Currency]fl
 }
 ```
 
-### Step 8: Export a csv with the result of the sum balances by year and currency
+### Step 9: Export a csv with the result of the sum balances by year and currency
 
 We want to export the result of the sum of balances by year and currency, tell copilot to explain how to do it
 
@@ -467,7 +474,9 @@ func writeCSV(filePath string, sums map[string]map[Currency]float64) error {
 }
 ```
 
-### Step 9: Add Tests
+### Step 10: Add Tests
+
+> ⚠️ GitHub Copilot will most likely give us somewhat different answers to the code we have in our README, but the result should be similar.
 
 Ask to copilot to generate test for the function to sum balances. Select the function and use the selection in the copilot chat.
 
@@ -507,7 +516,7 @@ Now we want to test all the main file. Tell copilot to do it.
 👤Prompt:
 
 ```
-@workspace /tests generate tests for #file:main.go
+@workspace /tests Generate unit tests for every function the file #file:main.go
 ```
 
 🤖 Copilot Answer:
@@ -633,11 +642,69 @@ func TestWriteCSV(t *testing.T) {
 
 🤖 Copilot Answer:
 
-```cmd
+```bash
 go test ./cmd
 ```
 
-### Step 10: Export Copilot Chat
+### Step 11: Add Cron Job to export csv
+
+Tell to GitHub Copilot that you want to implement cron jobs to export the csv
+
+👤Prompt:
+
+```
+@workspace now I would like to implement cron jobs to export the csv every 1 min, how can we do it ?
+```
+
+🤖 Copilot Answer:
+
+To implement cron jobs to export the CSV every 1 minute, you can use the github.com/robfig/cron/v3 package.
+Here's how you can do it:
+
+1. Install the cron package:
+
+```bash
+go get github.com/robfig/cron/v3
+```
+
+2. Update your main.go file to include the cron job setup:
+
+```go
+func exportCSV() {
+    accounts, err := readCSV("assets/accounts.csv")
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+
+    sums := sumBalancesByYearAndCurrency(accounts)
+
+    err = writeCSV("assets/sum_balances.csv", sums)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
+
+    fmt.Println("CSV file created successfully.")
+}
+```
+
+```go
+func main() {
+    c := cron.New()
+    c.AddFunc("@every 1m", exportCSV)
+    c.Start()
+
+    // Keep the program running
+    select {}
+}
+```
+
+```bash
+go run main.go
+```
+
+### Step 12: Export Copilot Chat
 
 Exporting GitHub Copilot chat enables you to document and review interactions for future reference, share insights with team members, and track decision-making processes, enhancing collaboration, learning, and code quality.
 
