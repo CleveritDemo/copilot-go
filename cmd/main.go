@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/robfig/cron/v3"
 )
 
 // AccountType represents the type of an account.
@@ -111,7 +113,7 @@ func writeCSV(filePath string, sums map[string]map[Currency]float64) error {
 	return nil
 }
 
-func main() {
+func exportCSV() {
 	accounts, err := readCSV("assets/accounts.csv")
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -127,4 +129,13 @@ func main() {
 	}
 
 	fmt.Println("CSV file created successfully.")
+}
+
+func main() {
+	c := cron.New()
+	c.AddFunc("@every 1m", exportCSV)
+	c.Start()
+
+	// Keep the program running
+	select {}
 }
