@@ -225,7 +225,7 @@ type AccountType string
 
 const (
 	Checking AccountType = "Checking"
-	Saving   AccountType = "Saving"
+	Savings   AccountType = "Savings"
 )
 ```
 
@@ -325,7 +325,6 @@ type Currency string
 const (
     USD Currency = "USD"
     EUR Currency = "EUR"
-    GBP Currency = "GBP"
 )
 ```
 
@@ -344,7 +343,7 @@ type AccountType string
 
 const (
     Checking AccountType = "Checking"
-    Saving   AccountType = "Saving"
+    Savings   AccountType = "Savings"
 )
 
 type Currency string
@@ -352,7 +351,6 @@ type Currency string
 const (
     USD Currency = "USD"
     EUR Currency = "EUR"
-    GBP Currency = "GBP"
 )
 
 type Account struct {
@@ -501,8 +499,8 @@ func TestSumBalancesByYearAndCurrency(t *testing.T) {
 	// Create sample data
 	accounts := []Account{
 		{AccountID: "1", AccountHolderName: "John Doe", Balance: 1000.50, Currency: USD, Type: Checking, CreatedAt: time.Date(2022, 1, 1, 0, 0, 0, 0, time.UTC)},
-		{AccountID: "2", AccountHolderName: "Jane Smith", Balance: 2000.75, Currency: EUR, Type: Saving, CreatedAt: time.Date(2021, 6, 15, 0, 0, 0, 0, time.UTC)},
-		{AccountID: "3", AccountHolderName: "Alice Brown", Balance: 1500.00, Currency: USD, Type: Saving, CreatedAt: time.Date(2022, 3, 10, 0, 0, 0, 0, time.UTC)},
+		{AccountID: "2", AccountHolderName: "Jane Smith", Balance: 2000.75, Currency: EUR, Type: Savings, CreatedAt: time.Date(2021, 6, 15, 0, 0, 0, 0, time.UTC)},
+		{AccountID: "3", AccountHolderName: "Alice Brown", Balance: 1500.00, Currency: USD, Type: Savings, CreatedAt: time.Date(2022, 3, 10, 0, 0, 0, 0, time.UTC)},
 	}
 
 	// Call sumBalancesByYearAndCurrency
@@ -552,7 +550,7 @@ func TestReadCSV(t *testing.T) {
 	// Write sample data to the file
 	data := `AccountID,AccountHolderName,Balance,Currency,Type,CreatedAt
 1,John Doe,1000.50,USD,Checking,2022-01-01
-2,Jane Smith,2000.75,EUR,Saving,2021-06-15`
+2,Jane Smith,2000.75,EUR,Savings,2021-06-15`
 	if _, err := file.Write([]byte(data)); err != nil {
 		t.Fatal(err)
 	}
@@ -567,7 +565,7 @@ func TestReadCSV(t *testing.T) {
 	// Verify the returned data
 	expected := []Account{
 		{AccountID: "1", AccountHolderName: "John Doe", Balance: 1000.50, Currency: USD, Type: Checking, CreatedAt: time.Date(2022, 1, 1, 0, 0, 0, 0, time.UTC)},
-		{AccountID: "2", AccountHolderName: "Jane Smith", Balance: 2000.75, Currency: EUR, Type: Saving, CreatedAt: time.Date(2021, 6, 15, 0, 0, 0, 0, time.UTC)},
+		{AccountID: "2", AccountHolderName: "Jane Smith", Balance: 2000.75, Currency: EUR, Type: Savings, CreatedAt: time.Date(2021, 6, 15, 0, 0, 0, 0, time.UTC)},
 	}
 	if !reflect.DeepEqual(accounts, expected) {
 		t.Errorf("Expected %v, got %v", expected, accounts)
@@ -578,8 +576,8 @@ func TestSumBalancesByYearAndCurrency(t *testing.T) {
 	// Create sample data
 	accounts := []Account{
 		{AccountID: "1", AccountHolderName: "John Doe", Balance: 1000.50, Currency: USD, Type: Checking, CreatedAt: time.Date(2022, 1, 1, 0, 0, 0, 0, time.UTC)},
-		{AccountID: "2", AccountHolderName: "Jane Smith", Balance: 2000.75, Currency: EUR, Type: Saving, CreatedAt: time.Date(2021, 6, 15, 0, 0, 0, 0, time.UTC)},
-		{AccountID: "3", AccountHolderName: "Alice Brown", Balance: 1500.00, Currency: USD, Type: Saving, CreatedAt: time.Date(2022, 3, 10, 0, 0, 0, 0, time.UTC)},
+		{AccountID: "2", AccountHolderName: "Jane Smith", Balance: 2000.75, Currency: EUR, Type: Savings, CreatedAt: time.Date(2021, 6, 15, 0, 0, 0, 0, time.UTC)},
+		{AccountID: "3", AccountHolderName: "Alice Brown", Balance: 1500.00, Currency: USD, Type: Savings, CreatedAt: time.Date(2022, 3, 10, 0, 0, 0, 0, time.UTC)},
 	}
 
 	// Call sumBalancesByYearAndCurrency
