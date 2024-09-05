@@ -15,11 +15,18 @@ const (
 	Savings  AccountType = "Savings"
 )
 
+type Currency string
+
+const (
+	USD Currency = "USD"
+	EUR Currency = "EUR"
+)
+
 type Account struct {
 	AccountID         string
 	AccountHolderName string
 	Balance           float64
-	Currency          string
+	Currency          Currency
 	Type              AccountType
 	CreatedAt         time.Time
 }
@@ -51,7 +58,7 @@ func readCSV(filePath string) ([]Account, error) {
 			AccountID:         record[0],
 			AccountHolderName: record[1],
 			Balance:           balance,
-			Currency:          record[3],
+			Currency:          Currency(record[3]),
 			Type:              AccountType(record[4]),
 			CreatedAt:         createdAt,
 		}
