@@ -4,9 +4,20 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
+	"strconv"
+	"time"
 )
 
-func readCSV(filePath string) ([][]string, error) {
+type Account struct {
+	AccountID         string
+	AccountHolderName string
+	Balance           float64
+	Currency          string
+	Type              string
+	CreatedAt         time.Time
+}
+
+func readCSV(filePath string) ([]Account, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, err
@@ -19,17 +30,38 @@ func readCSV(filePath string) ([][]string, error) {
 		return nil, err
 	}
 
-	return records, nil
+	var accounts []Account
+	for _, record := range records[1:] { // Skip header row
+		balance, err := strconv.ParseFloat(record[2], 64)
+		if err != nil {
+			return nil, err
+		}
+		createdAt, err := time.Parse("2006-01-02", record[5])
+		if err != nil {
+			return nil, err
+		}
+		account := Account{
+			AccountID:         record[0],
+			AccountHolderName: record[1],
+			Balance:           balance,
+			Currency:          record[3],
+			Type:              record[4],
+			CreatedAt:         createdAt,
+		}
+		accounts = append(accounts, account)
+	}
+
+	return accounts, nil
 }
 
 func main() {
-	records, err := readCSV("../assets/accounts.csv")
+	accounts, err := readCSV("../assets/accounts.csv")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
 
-	for _, record := range records {
-		fmt.Println(record)
+	for _, account := range accounts {
+		fmt.Printf("%+v\n", account)
 	}
 }
