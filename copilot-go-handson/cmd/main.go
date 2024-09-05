@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/robfig/cron/v3"
 )
 
 type AccountType string
@@ -106,27 +108,29 @@ func writeCSV(filePath string, sums map[string]map[Currency]float64) error {
 	return nil
 }
 
-func main() {
+func exportCSV() {
 	accounts, err := readCSV("../assets/accounts.csv")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
 
-	for _, account := range accounts {
-		fmt.Printf("%+v\n", account)
-	}
-
 	sums := sumBalancesByYearAndCurrency(accounts)
-	fmt.Println("Sum of balances by year and currency:")
-	for year, currencies := range sums {
-		for currency, sum := range currencies {
-			fmt.Printf("Year: %s, Currency: %s, Sum: %.2f\n", year, currency, sum)
-		}
-	}
 
 	err = writeCSV("../assets/sum_balances.csv", sums)
 	if err != nil {
-		fmt.Println("Error writing CSV:", err)
+		fmt.Println("Error:", err)
+		return
 	}
+
+	fmt.Println("CSV file created successfully.")
+}
+
+func main() {
+	c := cron.New()
+	c.AddFunc("@every 1m", exportCSV)
+	c.Start()
+
+	// Keep the program running
+	select {}
 }
