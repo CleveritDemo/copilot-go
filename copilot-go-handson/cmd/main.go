@@ -8,12 +8,19 @@ import (
 	"time"
 )
 
+type AccountType string
+
+const (
+	Checking AccountType = "Checking"
+	Savings  AccountType = "Savings"
+)
+
 type Account struct {
 	AccountID         string
 	AccountHolderName string
 	Balance           float64
 	Currency          string
-	Type              string
+	Type              AccountType
 	CreatedAt         time.Time
 }
 
@@ -45,7 +52,7 @@ func readCSV(filePath string) ([]Account, error) {
 			AccountHolderName: record[1],
 			Balance:           balance,
 			Currency:          record[3],
-			Type:              record[4],
+			Type:              AccountType(record[4]),
 			CreatedAt:         createdAt,
 		}
 		accounts = append(accounts, account)
