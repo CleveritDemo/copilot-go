@@ -82,6 +82,30 @@ func sumBalancesByYearAndCurrency(accounts []Account) map[string]map[Currency]fl
 	return sums
 }
 
+func writeCSV(filePath string, sums map[string]map[Currency]float64) error {
+	file, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	// Write header
+	writer.Write([]string{"Year", "Currency", "Sum of Balances"})
+
+	// Write data
+	for year, currencySums := range sums {
+		for currency, sum := range currencySums {
+			record := []string{year, string(currency), fmt.Sprintf("%.2f", sum)}
+			writer.Write(record)
+		}
+	}
+
+	return nil
+}
+
 func main() {
 	accounts, err := readCSV("../assets/accounts.csv")
 	if err != nil {
@@ -99,5 +123,10 @@ func main() {
 		for currency, sum := range currencies {
 			fmt.Printf("Year: %s, Currency: %s, Sum: %.2f\n", year, currency, sum)
 		}
+	}
+
+	err = writeCSV("../assets/sum_balances.csv", sums)
+	if err != nil {
+		fmt.Println("Error writing CSV:", err)
 	}
 }
