@@ -68,6 +68,20 @@ func readCSV(filePath string) ([]Account, error) {
 	return accounts, nil
 }
 
+func sumBalancesByYearAndCurrency(accounts []Account) map[string]map[Currency]float64 {
+	sums := make(map[string]map[Currency]float64)
+
+	for _, account := range accounts {
+		year := account.CreatedAt.Year()
+		if _, ok := sums[strconv.Itoa(year)]; !ok {
+			sums[strconv.Itoa(year)] = make(map[Currency]float64)
+		}
+		sums[strconv.Itoa(year)][account.Currency] += account.Balance
+	}
+
+	return sums
+}
+
 func main() {
 	accounts, err := readCSV("../assets/accounts.csv")
 	if err != nil {
@@ -77,5 +91,13 @@ func main() {
 
 	for _, account := range accounts {
 		fmt.Printf("%+v\n", account)
+	}
+
+	sums := sumBalancesByYearAndCurrency(accounts)
+	fmt.Println("Sum of balances by year and currency:")
+	for year, currencies := range sums {
+		for currency, sum := range currencies {
+			fmt.Printf("Year: %s, Currency: %s, Sum: %.2f\n", year, currency, sum)
+		}
 	}
 }
