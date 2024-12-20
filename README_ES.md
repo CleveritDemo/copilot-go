@@ -215,7 +215,7 @@ Pregunta a copilot para crear un enum para el tipo de cuenta
 👤 Prompt:
 
 ```
-@workspace Define un enum AccountType como una cadena con dos valores posibles: Checking y Savings
+@workspace Define un enum AccountType como una cadena con dos valores posibles: Checking y Savings e implementalo
 ```
 
 🤖 Respuesta de Copilot:
@@ -314,7 +314,7 @@ Dile a copilot que cree un enum para currency,podría ser EUR o USD
 👤Prompt:
 
 ```
-@workspace Define un enum Currency como una cadena con dos valores posibles: USD y EUR
+@workspace Define un enum Currency como una cadena con dos valores posibles: USD y EUR e implementalo
 ```
 
 🤖 Respuesta de Copilot:
@@ -421,7 +421,7 @@ Queremos sumar los saldos en el archivo CSV por año y por moneda, solicitemos e
 👤Prompt:
 
 ```
-@workspace ahora crea una función para obtener la suma de saldos por año y por moneda
+@workspace ahora crea una función para obtener la suma de saldos por año y por moneda y usa dicha funcion
 ```
 
 🤖 Respuesta de Copilot:
